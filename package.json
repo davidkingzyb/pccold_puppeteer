@@ -1,0 +1,15 @@
+{
+  "name": "puppeter",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "puppeteer": "^1.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev":"node index.js"
+  },
+  "author": "dkz",
+  "license": "MIT"
+}
