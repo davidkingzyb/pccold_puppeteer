@@ -18,9 +18,10 @@ const puppeteer = require('puppeteer');
   page.on('response',async response =>{
     if(response.url().indexOf('lapi/live/getH5Play')!=-1){
       var resp=await response.json();
-      console.log(resp.data.rtmp_url+'/'+resp.data.rtmp_live);
+      console.log('$$$$'+resp.data.rtmp_url+'/'+resp.data.rtmp_live+'$$$$');
+      await browser.close();
     }
   })
-  await page.goto('https://douyu.com/5788220');//room config
+  await page.goto('https://douyu.com/20360');//room config
   await browser.close();
 })();

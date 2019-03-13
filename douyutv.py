@@ -15,7 +15,7 @@ def getPlay():
 	js=subprocess.Popen(['node','index.js'],stdout=subprocess.PIPE)
 	stdout,stderr=js.communicate()
 	js.wait()
-	return stdout.decode().split('\n')[0]
+	return stdout.decode().split('$$$$')[1]
 
 
 STREAM_WEIGHTS = {
