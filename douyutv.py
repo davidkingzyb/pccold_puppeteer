@@ -15,7 +15,7 @@ def getPlay():
 	js=subprocess.Popen(['node','index.js'],stdout=subprocess.PIPE)
 	stdout,stderr=js.communicate()
 	js.wait()
-	return stdout.decode().replace('\n','')
+	return stdout.decode().split('\n')[0]
 
 
 STREAM_WEIGHTS = {
@@ -65,3 +65,6 @@ class Douyutv(Plugin):
                 yield quality[i], HTTPStream(self.session, rtmp_url)
 
 __plugin__ = Douyutv
+
+if __name__ == '__main__':
+    print(rtmp_url)
