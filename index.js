@@ -7,8 +7,9 @@ const puppeteer = require('puppeteer');
   await page.setRequestInterception(true);
   page.on('request', request => {
   	if(request.url().indexOf('lapi/live/getH5Play')!=-1){
-      	// console.log('get play',request._url);
-        request.continue({});
+      var data=request.postData().replace(/rate=.+?&/,'rate=1&');//quality
+        console.log('get play',data);
+        request.continue({postData:data});
   	}else if(request.url().indexOf('douyucdn.cn/live')!=-1){
   		// console.log(request.url());
   	}else{

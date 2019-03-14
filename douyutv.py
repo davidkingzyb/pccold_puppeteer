@@ -19,9 +19,7 @@ def getPlay():
 
 
 STREAM_WEIGHTS = {
-    "low": 540,
-    "medium": 720,
-    "source": 1080
+    'default':1
 }
 
 rtmp_url=getPlay()
@@ -51,18 +49,15 @@ class Douyutv(Plugin):
             return STREAM_WEIGHTS[stream], "douyutv"
         return Plugin.stream_weight(stream)
 
-    def _get_streams(self):
-        quality = ['source', 'medium', 'low']
-        for i in range(0, 3, 1):
-            
-            if 'rtmp:' in rtmp_url:
-                stream = RTMPStream(self.session, {
-                        "rtmp": rtmp_url,
-                        "live": True
-                        })
-                yield quality[i], stream
-            else:
-                yield quality[i], HTTPStream(self.session, rtmp_url)
+    def _get_streams(self):    
+        if 'rtmp:' in rtmp_url:
+            stream = RTMPStream(self.session, {
+                    "rtmp": rtmp_url,
+                    "live": True
+                    })
+            yield 'default', stream
+        else:
+            yield 'default', HTTPStream(self.session, rtmp_url)
 
 __plugin__ = Douyutv
 

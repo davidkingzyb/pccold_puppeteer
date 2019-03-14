@@ -11,11 +11,13 @@
 
 `$ npm install`
 
-copy `douyutv.py` to your streamlink path plugs file
+copy `douyutv.py` to your streamlink path plugins file
 
 ## Config
 
-see `index.js` room config
+see `index.js` room config quality and room url
+
+`pccold.conf` stream_type="default"
 
 ## Usage
 
