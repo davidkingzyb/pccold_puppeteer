@@ -12,10 +12,13 @@ from streamlink.plugin.api import http, validate, useragents
 from streamlink.stream import HTTPStream, HLSStream, RTMPStream
 
 def getPlay():
-	js=subprocess.Popen(['node','index.js'],stdout=subprocess.PIPE)
-	stdout,stderr=js.communicate()
-	js.wait()
-	return stdout.decode().split('$$$$')[1]
+    js=subprocess.Popen(['node','index.js'],stdout=subprocess.PIPE)
+    stdout,stderr=js.communicate()
+    js.wait()
+    if stdout:
+        return stdout.decode().split('$$$$')[1]
+    else:
+        exit(1)
 
 
 STREAM_WEIGHTS = {
