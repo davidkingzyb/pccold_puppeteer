@@ -11,7 +11,7 @@
 
 `$ npm install`
 
-raspberry pi use v1.6.2
+raspberry pi use pupeteer v1.6.2
 
 copy `douyutv.py` to your streamlink path plugins file
 
