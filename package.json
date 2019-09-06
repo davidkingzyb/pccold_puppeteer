@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "puppeteer": "^1.13.0"
+    "puppeteer": "1.6.2"
   },
   "devDependencies": {},
   "scripts": {
-    "dev":"node index.js"
+    "dev": "node index.js"
   },
   "author": "dkz",
   "license": "MIT"
