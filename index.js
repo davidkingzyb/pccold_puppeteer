@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 
 (async() => {
     const browser = await puppeteer.launch({
-        // executablePath:'/usr/bin/chromium-browser',//raspi
+         executablePath:'/usr/bin/chromium-browser',//raspi
         // args:[]
     });
     const page = await browser.newPage();
