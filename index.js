@@ -3,7 +3,16 @@ const puppeteer = require('puppeteer');
 (async() => {
     const browser = await puppeteer.launch({
          executablePath:'/usr/bin/chromium-browser',//raspi
-        // args:[]
+        headless:true,
+        args: [
+            '–disable-gpu',
+            '–disable-dev-shm-usage',
+            '–disable-setuid-sandbox',
+            '–no-first-run',
+            '–no-sandbox',
+            '–no-zygote',
+            '–single-process'
+        ]
     });
     const page = await browser.newPage();
     page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36");
@@ -38,6 +47,7 @@ const puppeteer = require('puppeteer');
     try {
         await page.goto('https://douyu.com/20360', { timeout: 60000 }); //config
     } catch (e) {
+        // console.log('err',e);
         try {
             await page.close();
             await browser.close();
