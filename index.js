@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 
 (async() => {
     const browser = await puppeteer.launch({
-         executablePath:'/usr/bin/chromium-browser',//raspi
+        executablePath:'/usr/bin/chromium-browser',//raspi
         headless:true,
         args: [
             '–disable-gpu',
@@ -32,37 +32,39 @@ const puppeteer = require('puppeteer');
     page.on('response', async response => {
         if (response.url().indexOf('lapi/live/getH5Play') != -1) {
             var resp = await response.json();
+            var exitcode=1;
             if (resp.data.rtmp_url && resp.data.rtmp_live) {
                 console.log('$$$$' + resp.data.rtmp_url + '/' + resp.data.rtmp_live + '$$$$');
+                exitcode=0;
             }
             try {
                 await page.close();
                 await browser.close();
-                process.exit(0);
             } catch (e) {
-                process.exit(1);
             }
+            process.exit(exitcode);
         }
     })
     try {
         await page.goto('https://douyu.com/20360', { timeout: 60000 }); //config
     } catch (e) {
-        // console.log('err',e);
+        await sleep(1000);
+        console.log('err',e);
         try {
             await page.close();
             await browser.close();
-            process.exit(1);
+            process.exit(4);
         } catch (e) {
-            process.exit(1);
+            process.exit(4);
         }
     }
-    await sleep(10000);
+    await sleep(1000);
     try {
         await page.close();
         await browser.close();
-        process.exit(0);
+        process.exit(3);
     } catch (e) {
-        process.exit(0);
+        process.exit(3);
     }
 
 })();

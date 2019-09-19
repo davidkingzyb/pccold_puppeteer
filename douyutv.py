@@ -14,11 +14,13 @@ from streamlink.stream import HTTPStream, HLSStream, RTMPStream
 def getPlay():
     js=subprocess.Popen(['node','index.js'],stdout=subprocess.PIPE)
     stdout,stderr=js.communicate()
-    js.wait()
-    if stdout:
+    returncode=js.wait() # 0 ok , 1 not get url , 3 time out , 4 error
+    print('return code',returncode)
+    print(stdout.decode())
+    if returncode==0 and '$$$$' in stdout.decode():
         return stdout.decode().split('$$$$')[1]
     else:
-        exit(1)
+        exit(returncode)
 
 
 STREAM_WEIGHTS = {
