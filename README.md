@@ -11,7 +11,9 @@
 
 `$ npm install`
 
-raspberry pi use pupeteer v1.6.2
+raspberry pi need install chromium global
+
+`$ apt install chromium-browser`
 
 copy `douyutv.py` to your streamlink path plugins file
 
@@ -27,5 +29,6 @@ see `index.js` room config quality and room url
 
 ## Dependence
 
+- [pccold](https://github.com/davidkingzyb/pccold)
 - [pupeteer](https://github.com/GoogleChrome/puppeteer)
 - [streamlink](https://github.com/streamlink/streamlink)
