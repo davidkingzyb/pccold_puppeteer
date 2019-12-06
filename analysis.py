@@ -17,6 +17,8 @@ def analysis(filename):
                     uenter_set.add(line.split(' @ ')[1])
                 elif ' : ' in line:
                     speaker_set.add(line.split(' : ')[0])
+                    if 'Pc冷冷' in line:
+                        print(line)
             except Exception:
                 print('err')
     print(filename,len(uenter_set),len(speaker_set))
