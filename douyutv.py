@@ -100,6 +100,7 @@ def get_sign_url(post_v, rid, tt, ub9):
         'User-Agent': 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Mobile Safari/537.36'
     }
     response = requests.post(url=request_url, headers=header, data=post_data).json()
+    print('resp',response)
     if response.get('code') == 0:
         real_url = (response.get('data')).get('url')
         if 'mix=1' in real_url:
@@ -116,7 +117,7 @@ def get_real_url(rid):
     rid = str(rid)
     tt = get_tt()
     url = get_pre_url(rid, tt[1])
-    if url:
+    if url and False:#not use
         return "http://tx2play1.douyucdn.cn/live/" + url + ".flv?uuid="
     else:
         result = get_homejs(rid)
@@ -124,7 +125,7 @@ def get_real_url(rid):
         homejs = result[0]
         real_url = get_sign_url(tt[2], real_rid, tt[0], homejs)
         if real_url != 0:
-            real_url = "http://tx2play1.douyucdn.cn/live/" + real_url + ".flv?uuid="
+            real_url = "http://tx2play1.douyucdn.cn/live/" + real_url + "_550p.flv?uuid="
         else:
             real_url = '未开播'
         return real_url
@@ -159,7 +160,7 @@ STREAM_WEIGHTS = {
 }
 
 # rtmp_url=getPlay()
-rtmp_url=get_real_url(20360) #room id
+rtmp_url=get_real_url(1972046) #room id
 
 _url_re = re.compile(r"""
     http(s)?://
