@@ -1,4 +1,3 @@
-# https://github.com/wbt5/real-url/blob/master/douyu.py
 import subprocess
 import hashlib
 import re
@@ -6,13 +5,14 @@ import time
 import uuid
 
 from requests.adapters import HTTPAdapter
-
 from streamlink.plugin import Plugin
 from streamlink.plugin.api import http, validate, useragents
 from streamlink.stream import HTTPStream, HLSStream, RTMPStream
 
 import requests
 import execjs
+
+# https://github.com/wbt5/real-url/blob/master/douyu.py
 
 def get_tt():
     tt1 = str(int(time.time()))
@@ -117,8 +117,8 @@ def get_real_url(rid):
     rid = str(rid)
     tt = get_tt()
     url = get_pre_url(rid, tt[1])
-    if url and False:#not use
-        return "http://tx2play1.douyucdn.cn/live/" + url + ".flv?uuid="
+    if url:
+        return "http://tx2play1.douyucdn.cn/live/" + url + "_550p.flv?uuid="
     else:
         result = get_homejs(rid)
         real_rid = result[1]
@@ -129,7 +129,6 @@ def get_real_url(rid):
         else:
             real_url = '未开播'
         return real_url
-
 
 def get_url_from_js(rid):
     # 从播放页源代码中直接匹配地址
@@ -143,6 +142,8 @@ def get_url_from_js(rid):
         real_url = '直播间未开播或不存在'
     return "http://tx2play1.douyucdn.cn/live/" + real_url + ".flv?uuid="
 
+# puppteer
+
 def getPlay():
     js=subprocess.Popen(['node','index.js'],stdout=subprocess.PIPE)
     stdout,stderr=js.communicate()
@@ -155,10 +156,14 @@ def getPlay():
         exit(returncode)
 
 
+# plugin
+
+# rtmp_url=getPlay()
+# rtmp_url=get_real_url(9999) #room id
+
 STREAM_WEIGHTS = {
     'default':1
 }
-
 
 _url_re = re.compile(r"""
     http(s)?://
@@ -174,19 +179,20 @@ _url_re = re.compile(r"""
 """, re.VERBOSE)
 
 
-class Douyutv(Plugin):
+class PcCold(Plugin):
     @classmethod
     def can_handle_url(cls, url):
-        return _url_re.match(url)
+        return url=='https://pccold'
+        # return _url_re.match(url)
 
     @classmethod
     def stream_weight(cls, stream):
         if stream in STREAM_WEIGHTS:
-            return STREAM_WEIGHTS[stream], "douyutv"
+            return STREAM_WEIGHTS[stream], "pccold"
         return Plugin.stream_weight(stream)
 
-    def _get_streams(self):    
-        rtmp_url=get_real_url(1972046) #room id
+    def _get_streams(self):  
+        rtmp_url=get_real_url(6677) #room id
         if 'rtmp:' in rtmp_url:
             stream = RTMPStream(self.session, {
                     "rtmp": rtmp_url,
@@ -196,9 +202,4 @@ class Douyutv(Plugin):
         else:
             yield 'default', HTTPStream(self.session, rtmp_url)
 
-__plugin__ = Douyutv
-
-if __name__ == '__main__':
-    # rtmp_url=getPlay()
-    rtmp_url=get_real_url(1972046) #room id
-    print(rtmp_url)
+__plugin__ = PcCold 
